@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-import java.awt.*;
+import java.sql.SQLException;
 
 public class Controller{
 
@@ -23,13 +23,16 @@ public class Controller{
     public TableColumn<Client,String> col_Prenom;
     final ObservableList<Client> model = FXCollections.observableArrayList();
     
-    //Field Ajout
+    //Field_1
     public AnchorPane Field_1;
     public TextField TextField_Nom;
     public TextField TextField_Prenom;
     public TextField TextField_Ville;
-    public Button BtnA_Ajouter;
+    public Button BtnA_OK;
     public Button BtnA_Annuler;
+    boolean ajout = false;
+    boolean modif = false;
+    boolean supp = false;
 
     public void initialize(){
         ClientDAO table = new ClientDAO();
@@ -46,42 +49,86 @@ public class Controller{
     }
 
     //Ajout des clients
-    public void OnClickAjout(ActionEvent actionEvent) {
+    public boolean OnClickAjout(ActionEvent actionEvent) {
+        ajout = true;
         Field_1.setVisible(true);
 
+        return ajout;
+
     }
-    public void BtnA_AjouterClick(ActionEvent actionEvent) {
+
+    //Modif des clients
+    public boolean OnClickModif(ActionEvent actionEvent) {
+        modif = true;
+        Field_1.setVisible(true);
+        Client client = TableauClient.getSelectionModel().getSelectedItem();
+        System.out.println(TableauClient.getSelectionModel().getSelectedItem());
+
+        TextField_Nom.setText(client.getNom());
+        TextField_Prenom.setText(client.getPrenom());
+        TextField_Ville.setText(client.getVille());
+
+        return modif;
+
+    }
+
+    //Suppression des clients
+    public boolean OnClickSupp(ActionEvent actionEvent) {
+        supp = true;
+        Field_1.setVisible(true);
+        Client client = TableauClient.getSelectionModel().getSelectedItem();
+        System.out.println(TableauClient.getSelectionModel().getSelectedItem());
+
+        TextField_Nom.setText(client.getNom());
+        TextField_Prenom.setText(client.getPrenom());
+        TextField_Ville.setText(client.getVille());
+
+        return supp;
+
+    }
+
+    public void BtnA_OkClick(ActionEvent actionEvent) throws SQLException {
         ClientDAO cliDAO = new ClientDAO();
-        cliDAO.insert(new Client());
+        if(ajout == true){
+            String n = TextField_Nom.getText();
+            String p = TextField_Prenom.getText();
+            String v = TextField_Ville.getText();
 
-        String n = TextField_Nom.getText();
-        String p = TextField_Prenom.getText();
-        String v = TextField_Ville.getText();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            cliDAO.insert(new Client(n, p, v));
+            alert.showAndWait();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.showAndWait();
-        cliDAO.insert(new Client(n,p,v));
+        }else if(modif == true){
+            Client client = TableauClient.getSelectionModel().getSelectedItem();
+            System.out.println(TableauClient.getSelectionModel().getSelectedItem());
+
+
+            client.setNom(TextField_Nom.getText());
+            client.setPrenom(TextField_Prenom.getText());
+            client.setVille(TextField_Ville.getText());
+
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            cliDAO.update(client);
+            alert.showAndWait();
+
+        } else if(supp == true){
+            Client client = TableauClient.getSelectionModel().getSelectedItem();
+            System.out.println(TableauClient.getSelectionModel().getSelectedItem());
+
+        }
 
     }
+
+    //Annule = clear field_1 et cache le field_1
     public void BtnA_AnnulerClick(ActionEvent actionEvent){
         Field_1.setVisible(false);
         TextField_Nom.clear();
         TextField_Prenom.clear();
         TextField_Ville.clear();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmation d'annulation");
-        alert.showAndWait();
 
-    }
-
-
-    //Modif des clients
-    public void OnClickModif(ActionEvent actionEvent) {
-    }
-
-    //Suppression des clients
-    public void OnClickSupp(ActionEvent actionEvent) {
     }
 }

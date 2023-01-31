@@ -14,20 +14,20 @@
       <Button fx:id="Btn_Supp" layoutX="247.0" layoutY="261.0" mnemonicParsing="false" onAction="#OnClickSupp" prefHeight="33.0" prefWidth="106.0" text="Supprimer" />
       <TableView fx:id="TableauClient" layoutX="14.0" layoutY="11.0" prefHeight="376.0" prefWidth="197.0">
         <columns>
-          <TableColumn fx:id="col_Nom" prefWidth="98.0" text="C1" />
-          <TableColumn fx:id="col_Prenom" prefWidth="98.0" text="C2" />
+          <TableColumn fx:id="col_Nom" prefWidth="98.0" text="Nom" />
+          <TableColumn fx:id="col_Prenom" prefWidth="98.0" text="Prenom" />
         </columns>
       </TableView>
       <AnchorPane fx:id="Field_1" layoutX="378.0" layoutY="11.0" prefHeight="376.0" prefWidth="213.0" visible="false">
          <children>
-            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout " wrappingWidth="61.7294921875" />
+            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Details" wrappingWidth="61.7294921875" />
             <Text layoutX="13.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" wrappingWidth="50.03857421875" />
             <Text layoutX="13.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prénom" />
             <Text layoutX="13.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ville" wrappingWidth="61.7294921875" />
             <TextField fx:id="TextField_Nom" layoutX="21.0" layoutY="105.0" promptText="Entrez nom..." />
             <TextField fx:id="TextField_Prenom" layoutX="21.0" layoutY="188.0" promptText="Entrez prenom" />
             <TextField fx:id="TextField_Ville" layoutX="21.0" layoutY="259.0" promptText="Entrez Ville...." />
-            <Button fx:id="BtnA_Ajouter" layoutX="14.0" layoutY="329.0" mnemonicParsing="false" onAction="#BtnA_AjouterClick" text="Ajouter" />
+            <Button fx:id="BtnA_OK" layoutX="14.0" layoutY="329.0" mnemonicParsing="false" onAction="#BtnA_OkClick" text="OK" />
             <Button fx:id="BtnA_Annuler" layoutX="126.0" layoutY="329.0" mnemonicParsing="false" onAction="#BtnA_AnnulerClick" text="Annuler" />
          </children>
       </AnchorPane>
