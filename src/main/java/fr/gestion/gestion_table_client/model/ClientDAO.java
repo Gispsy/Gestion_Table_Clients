@@ -20,7 +20,7 @@ public class ClientDAO {
             ResultSet resultat = stm.executeQuery("SELECT * FROM client");//Requete demander a la base de donnée
 
             while (resultat.next()){
-                Client cli = new Client(resultat.getString("cli_nom"),resultat.getString("cli_prenom"),resultat.getString("cli_ville"));//Si la connection est bonne afficher le nom + prenom dans les 2 colonnes
+                Client cli = new Client(resultat.getString("cli_nom"),resultat.getString("cli_prenom"),resultat.getString("cli_ville"),resultat.getInt("cli_id"));//Si la connection est bonne afficher le nom + prenom dans les 2 colonnes
 
                 result.add(cli);
 
@@ -76,12 +76,43 @@ public class ClientDAO {
         stm.setString(1, cli.getNom());
         stm.setString(2, cli.getPrenom());
         stm.setString(3, cli.getVille());
+        stm.setInt(4,cli.getId());
+
+        System.out.println(stm.toString());
 
         stm.execute();
 
         stm.close();
         con.close();
         System.out.println("La modification s’est bien effectuée");
+
+    }
+
+    public void delete(Client cli) throws SQLException {
+        String url = "jdbc:mysql://localhost:3307/hotel";
+        Connection con = DriverManager.getConnection(url, "root", "tiger");
+
+        PreparedStatement stm = con.prepareStatement("DELETE reservation\n" +
+                                                        "FROM reservation\n" +
+                                                        "JOIN client c on reservation.res_cli_id = c.cli_id\n" +
+                                                        "WHERE cli_id =?");
+
+        PreparedStatement stm2 = con.prepareStatement("DELETE client\n" +
+                                                        "FROM client\n" +
+                                                        "JOIN reservation c on client.cli_id = c.res_cli_id\n" +
+                                                        "WHERE cli_id =?");
+
+        stm2.setInt(1,cli.getId());
+
+        stm.setInt(1, cli.getId());
+
+        stm2.execute();
+        stm.execute();
+
+        stm2.close();
+        stm.close();
+        con.close();
+        System.out.println("La suppression s’est bien effectuée");
 
     }
 }

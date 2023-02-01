@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import javax.swing.table.AbstractTableModel;
 import java.sql.SQLException;
 
 public class Controller{
@@ -45,6 +46,11 @@ public class Controller{
 
         TableauClient.setItems(model);
 
+
+    }
+    public void refresh(){
+
+        TableauClient.refresh();
 
     }
 
@@ -99,10 +105,10 @@ public class Controller{
             cliDAO.insert(new Client(n, p, v));
             alert.showAndWait();
 
+            refresh();
+
         }else if(modif == true){
             Client client = TableauClient.getSelectionModel().getSelectedItem();
-            System.out.println(TableauClient.getSelectionModel().getSelectedItem());
-
 
             client.setNom(TextField_Nom.getText());
             client.setPrenom(TextField_Prenom.getText());
@@ -111,12 +117,25 @@ public class Controller{
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
-            cliDAO.update(client);
             alert.showAndWait();
+            cliDAO.update(client);
+
+            refresh();
 
         } else if(supp == true){
             Client client = TableauClient.getSelectionModel().getSelectedItem();
             System.out.println(TableauClient.getSelectionModel().getSelectedItem());
+
+            client.setNom(TextField_Nom.getText());
+            client.setPrenom(TextField_Prenom.getText());
+            client.setVille(TextField_Ville.getText());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.showAndWait();
+            cliDAO.delete(client);
+
+            refresh();
 
         }
 

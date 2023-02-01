@@ -5,20 +5,22 @@ public class Client {
     private String nom;
     private String prenom;
     private String ville;
+    private int id;
 
     //Constructeur par defaut
-
     public Client(){}
-    public Client(String nom, String prenom, String ville){
+
+    //Constructeur avec nom + prenom + ville
+    public Client(String nom, String prenom, String ville, int id){
         this.nom = nom;
         this.prenom = prenom;
         this.ville = ville;
+        this.id = id;
     }
-
-    //Constructeur avec nom et prenom
-    public Client(String nom, String prenom) {
+    public Client(String nom, String prenom, String ville) {
         this.nom = nom;
         this.prenom = prenom;
+        this.ville = ville;
     }
 
     //Attribut prenom
@@ -45,6 +47,14 @@ public class Client {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
